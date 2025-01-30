@@ -1,0 +1,97 @@
+<html lang="en">
+<head>
+    
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Experience</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Edu+NSW+ACT+Foundation&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://getbootstrap.com/docs/5.2/assets/css/docs.css"
+      rel="stylesheet"
+    />
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Edu+NSW+ACT+Foundation&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body style="background-color: #141e27">
+    
+    <div id="navbar"></div>
+
+    <script>
+        fetch("navbar.html")
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("navbar").innerHTML = data;
+            });
+    </script>
+
+
+<div class="projects" id="Publication">
+  <div class="project-head">
+    <h2>Publication</h2>
+
+  </div>
+  <div class="project-list">
+      <div class="project-item">
+          <div class="project-description">
+              <h3>Heartisan: An Incremental Learning Based Arrhythmia Detection and Data Collection System</h3>
+              <p>DOI: 10.1109/CBMS58004.2023.00204 <br><br>
+                  I. R. Nijhum, <strong>A. Ghosh</strong>, H. Hassan, M. Y. Hossain, and T. Rahman. In Proceedings of the IEEE 36th International Symposium on Computer Based Medical Systems (CBMS 2023), L’Aquila, Italy, June 22‑24, 2023.
+              </p>
+        
+          </div>
+      </div>
+
+      <div class="project-head">
+        <h2>Research</h2>
+      </div>
+      <ul class="project-list">
+        <li class="project-item">
+          <div class="project-description">
+            <h3>Training Pruned Language Model</h3>
+            <p>CSE499 ‑ UNDERGRADUATE DISSERTATION | Sep. 2021 ‑ April 2022<br><br>
+              <span>Used Language, Methods and Key Index:</span> Python, Web Scraping, Data Pre‑processing, Model‑Fine Tuning, Iterative Pattern Exploiting Training, Pruning (Lottery Ticket Hypothesis), Custom Dataset, Transformer Models, Bangla Language Processing.
+            </p>
+          </div>
+        </li>
+    
+        <li class="project-item">
+          <div class="project-description">
+            <h3>Image Synthesis with Normalizing Flows</h3>
+            <p>CSE465 ‑ PATTERN RECOGNiTiON AND NEURAL NETWORK RESEARCH PROJECT | May 2021 ‑ Sep. 2021<br><br>
+              <span>Used Language, Methods and Key Index:</span> Python, Data Preprocessing, Image Processing, Custom Dataset, Normalizing Flows, Classification Model, Image Synthesis.
+            </p>
+          </div>
+        </li>
+    
+        <li class="project-item">
+          <div class="project-description">
+            <h3>Emotional Reactions and Family Resilience During COVID‑19 Lockdown Period among Bangladeshi Families</h3>
+            <p>CSE445 ‑ MACHINE LEARNING RESEARCH PROJECT | May 2021 ‑ Sep. 2021<br><br>
+              <span>Used Language, Methods and Key Index:</span> Python, Data Pre‑processing, Custom Dataset, Sci‑kit Learn, Data Engineering, Data Analysis, Classification.
+            </p>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+
+</body>

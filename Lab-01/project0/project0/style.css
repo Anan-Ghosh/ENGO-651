@@ -1,0 +1,495 @@
+.upper {
+    display: flex;
+    margin: 1% 2%;
+    padding: 3% 0%;
+    padding-left: 6%;
+    padding-right: 6%;
+}
+
+.profile_image {
+    margin: 5% 2%;
+    padding: 3% 0%;
+    padding-left: 15%;
+}
+
+
+.pc {
+    margin: 2%;
+    width: 290px;
+    height: 300px;
+    padding: 10px;
+    border-image-slice: fill;
+    border-radius: 150%;
+    box-shadow: 0 0 0 2px #fff;
+}
+
+.about {
+    margin: 1% 1%;
+    padding-left: 3%;
+}
+
+.about h1 {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 70px;
+    /* font-weight: 600; */
+    color: #fff;
+    margin: 5% 0% 0% 0%;
+    padding-top: 7%;
+    transition: 3s;
+    transition-property: all;
+    transition-timing-function: ease;
+    transition-delay: 1ms;
+}
+
+.nsu:hover {
+    font-size: 25px;
+    font-weight: 300;
+    transition: 2s;
+    transition-property: none;
+    transition-timing-function: ease-in-out;
+    transition-delay: 1ms;
+}
+
+.about p {
+    text-align: justify;
+    padding-right: 30%;
+    padding-top: 3%;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: large;
+    color: #fff;
+}
+
+
+.middle {
+    display:flexbox;
+    position:relative;
+    margin: 1% 2%;
+    padding: 3% 0%;
+    padding-left: 6%;
+    padding-right: 6%;
+}
+
+
+.education {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: large;
+    text-align: justify;
+    color: #fff;
+    margin-top: 1%;
+    padding-left: 18%;
+    margin-bottom: 3%;
+}
+
+.education h2 {
+    font-size: 40px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    color: #FEFBE7;
+    margin-bottom: 5px;
+    padding-bottom: 40px;
+}
+
+.education p {
+    font-size: large;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    color: #fff;
+    text-align: justify;
+    padding-left: 3%;    
+    margin-bottom: 2%;
+}
+
+.experience{
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: large;
+    text-align: justify;
+    color: #fff;
+    margin-top: 1%;
+    padding-left: 18%;
+    margin-bottom: 3%;
+}
+
+.experience h2 {
+    font-size: 40px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    color: #FEFBE7;
+    margin-bottom: 5px;
+    padding-bottom: 40px;
+}
+
+.experience p {
+    font-size: large;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    color: #fff;
+    text-align: justify;
+    padding-left: 3%;    
+    margin-bottom: 2%;
+}
+
+.research {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: large;
+    text-align: justify;
+    color: #fff;
+    margin-top: 1%;
+    padding-left: 18%;
+}
+
+.research h2 {
+    font-size: 40px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    color: #FEFBE7;
+    margin-bottom: 5px;
+    padding-top: 2%;
+    padding-bottom: 40px;
+}
+
+.h5_color{
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    color: #FEF9A7;
+    padding-left: 3%;
+}
+
+.project {
+    text-align: justify;
+    font-size: 18px;
+    text-align: justify;
+    padding-left: 5%;
+    padding-right: 23%;
+}
+
+.lower {
+    display: block;
+    margin: 1% 2%;
+    padding: 1% 0%;
+    padding-left: 6%;
+    padding-right: 6%;
+}
+
+.experience {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: large;
+    text-align: justify;
+    color: #fff;
+    margin-top: 1%;
+    padding-left: 18%;
+}
+
+.experience h2 {
+    font-size: 40px;
+    font-weight: 100;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    color: #FEFBE7;
+    padding-top: 2%;
+    padding-bottom: 40px;
+}
+
+.acm {
+    display: flex;
+    text-align: justify;
+    padding-left: -5%;
+}
+
+#position {
+    margin-top: 5px;
+    padding-top: 1%;
+    padding-left: 10%;
+    text-align: justify;
+    font-size: medium;
+    color: #FEF9A7;
+}
+
+.lorem {
+    display: flexbox;
+    text-align: justify;
+    padding-left: 55%;
+    padding-right: 22%;
+    margin-top: -3%;
+    padding-top: -3%;
+    font-size: medium;
+    text-align: justify;
+}
+
+.lorem2 {
+    display: flexbox;
+    text-align: justify;
+    padding-left: 40%;
+    margin-top: -3%;
+    padding-top: -3%;
+    font-size: 18px;
+    text-align: justify;
+}
+
+
+.project2 {
+    text-align: justify;
+    font-size: 20px;
+    font-weight: 100;
+    padding-left: 5%;
+    padding-right: 23%;
+}
+
+
+#position2 {
+    margin-top: 2%;
+    margin-bottom: 2%;
+    padding-left: 10%;
+    text-align: justify;
+    font-size: medium;
+    color: #FEF9A7;
+}
+
+.head{
+    display: flexbox;
+    margin-top: 1%;
+    padding-top: 2%;
+    font-style: italic;
+    color: whitesmoke;
+
+}
+
+.education {
+    padding: 40px 0;
+
+}
+
+.flex-container-education {
+    display:flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+    text-align: center;
+}
+
+.box {
+    flex: 1;
+    background: whitesmoke;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.image-container img {
+    width: 100px;
+    height: auto;
+    margin-bottom: 3%;
+}
+
+.name {
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.text {
+    color: black;
+}
+
+.title {
+    color: black;
+}
+
+@media (max-width: 768px) {
+    .flex-container-education {
+        flex-direction: column;
+    }
+}
+
+
+
+
+
+.services .icons img {
+    width: 50px; 
+    height: 50px; 
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 5px; 
+  }
+  .services {
+    margin-top: 1%;
+    padding: auto;
+  
+  }
+  
+  .services .max-width {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  
+  .services .title {
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 60px;
+    color: #333;
+    position: relative;
+  }
+  
+  .services .serv-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .services .card {
+    width: calc(33.333% - 40px);
+    margin: 20px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    background: #fff;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .services .card:hover {
+    transform: translateY(-10px);
+  }
+  
+  .services .box {
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .services .box img {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    border-radius: 50%;
+    border: 2px solid #e0e0e0;
+    padding: 10px;
+  }
+  
+  .services .text {
+    font-size: 1.2rem;
+    margin: 10px 0;
+    color: #555;
+  }
+  
+  .services .icons {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 10px;
+  }
+  
+  .services .icons img {
+    width: 40px;
+    height: 40px;
+    margin: 5px;
+    transition: transform 0.3s ease-in-out;
+    border-radius: 50%;
+    border: 2px solid #e0e0e0;
+    padding: 5px;
+  }
+  
+  .services .icons img:hover {
+    transform: scale(1.2);
+  }
+
+
+  .projects {
+    width: 90%;
+    margin: 2em auto;
+    padding: 2em 0;
+    color: white;
+  }
+  
+  .project-head {
+    margin-bottom: 2em;
+    text-align: center;
+  }
+  
+  .project-head h2 {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    padding: 0.4em 0;
+    font-size: 3rem;
+    letter-spacing: 0.15rem;
+    color: white;
+    border-bottom: 2px solid #FEF9A7;
+    display: inline-block;
+  }
+  
+  .project-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5em;
+  }
+  
+  .project-item {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 1.5em;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.2);
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .project-item:hover {
+    transform: scale(1.03);
+  }
+  
+  .project-description {
+    text-align: center;
+    font-size: 1.2rem;
+    color: white;
+  }
+  
+  .project-description h3 {
+    font-size: 1.4rem;
+    letter-spacing: 0.15rem;
+    font-weight: 600;
+    text-align: center;
+    line-height: 2rem;
+    color: #FEF9A7;
+  }
+  
+  .project-description p {
+    margin-top: 0.8em;
+    line-height: 1.5rem;
+    font-size: 1rem;
+    letter-spacing: 0.12rem;
+    text-align: center;
+    color: white;
+  }
+  
+  .project-description p span {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #FFDD95;
+  }
+  
+  
+
+  
+
+   /* Contact Section */
+   .footer {
+    margin-top: 2%;
+    padding: auto;
+    text-align: center; /* Center align everything */
+    padding-top: 25%;
+     /* Adjust to your theme */
+    color: whitesmoke;
+}
+
+.link_icon {
+    display: flex;
+    justify-content: center; /* Center icons horizontally */
+    gap: 20px; /* Space between icons */
+    margin-bottom: 15px;
+}
+
+.link_icon a {
+    display: inline-block; /* Keep anchor elements inline */
+}
+
+.copyright {
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.copyright a {
+    display: flex;
+    color: whitesmoke;
+    text-decoration: none;
+    justify-content: center;
+}

@@ -1,0 +1,99 @@
+<html lang="en">
+<head>
+    
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Experience</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Edu+NSW+ACT+Foundation&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://getbootstrap.com/docs/5.2/assets/css/docs.css"
+      rel="stylesheet"
+    />
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Edu+NSW+ACT+Foundation&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body style="background-color: #141e27">
+    
+    <div id="navbar"></div>
+
+    <script>
+        fetch("navbar.html")
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("navbar").innerHTML = data;
+            });
+    </script>
+
+<section class="middle-part">
+    <div class="middle">
+
+
+        <div class="head">
+            <h2>Experience</h2>
+
+
+            <div class="container mt-4">
+                <div class="row align-items-center">
+                    <!-- Image Column -->
+                    <div class="col-md-4 text-center">
+                        <img src="OIP.jpeg" class="pc" alt="Profile Image">
+                        <div class="position-timeline mt-4">Junior Developer Intern <br> Rockville MD, USA <br>March 2023 - July 2023</div>
+                    </div>
+            
+                    <!-- Description Column -->
+                    <div class="col-md-8">
+                        <h5><a  href="http://www.legoio.com/" target="_blank"
+                            style="color: #0485f5; text-decoration: none">LEGO IO</a></h5>
+                        <p>Explore the realm of data optimization and innovation as I navigate through my role in a dynamic company. My responsibilities include crafting and refining an efficient system to deliver user-friendly data. This involves scouring the web for valuable information, manipulating it to suit our needs, and ensuring its effectiveness within the system. Through meticulous optimization and preprocessing, I tailor the data to meet our exact requirements, contributing to a seamless user experience. Additionally, I collaborate within the CI/CD pipeline, ensuring smooth system development and deployment. Join me in this exhilarating journey toward data excellence!</p>
+                    </div>
+                </div>
+            </div>
+
+
+            <br>
+
+
+        <div class="head">
+            <h2>Extracurricular Activities</h2>
+
+            <div class="container mt-4">
+                <div class="row align-items-center">
+                    <!-- Image Column -->
+                    <div class="col-md-4 text-center">
+                        <img src="OIP (1).jpeg" class="pc" alt="Profile Image">
+                        <div class="position-timeline mt-4">SUB EXECUTIVE <br> Dhaka, Bangladesh <br>February 2021 ‑ February 2022</div>
+                    </div>
+            
+                    <!-- Description Column -->
+                    <div class="col-md-8">
+                        <h5><a  href="https://nsusc.acm.org/" target="_blank"
+                style="color: #0485f5; text-decoration: none">NSU ACM</a></h5>
+                        <p>As a key contributor, I organized one of NSU ACM's signature events, HACKNSU Season 4, showcasing exemplary organizational skills. From conceptualization to logistics, I ensured seamless operations, fostering a dynamic environment for innovation and collaboration. By curating innovative challenges and engaging with participants, sponsors, and partners, I elevated the event's profile and impact within the tech community. I actively participated in the meticulous planning and flawless execution of the Innovation Challenge, ensuring its success. My role exemplifies my commitment to fostering innovation and facilitating collaboration</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+  
+  
+    
+</body>
+</html>
