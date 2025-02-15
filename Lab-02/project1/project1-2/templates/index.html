@@ -6,9 +6,12 @@
 <body>
     <h2>Welcome to the Book Review Website</h2>
     {% if session["username"] %}
-        <p>Hello, {{ session["username"] }}! <a href="/logout">Logout</a></p>
-    {% else %}
-        <p><a href="/login">Login</a> or <a href="/register">Register</a></p>
-    {% endif %}
+    <p>Hello, {{ session["username"] }}!</p>
+    <p><a href="/search">🔍 Search for Books</a></p>
+    <p><a href="/logout">Logout</a></p>
+{% else %}
+    <p><a href="/login">Login</a> or <a href="/register">Register</a></p>
+{% endif %}
+
 </body>
 </html>
