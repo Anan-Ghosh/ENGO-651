@@ -33,36 +33,41 @@ def create_table():
     conn.close()
     print("Table created successfully!")
 
+
 def import_books():
     create_table()  # Ensure the table exists before inserting data
 
-    try:
-        conn = psycopg2.connect(
-            dbname=DB_NAME,
-            user=DB_USER,
-            password=DB_PASSWORD,
-            host=DB_HOST,
-            port=DB_PORT
-        )
-        cur = conn.cursor()
+    conn = psycopg2.connect(
+        dbname=DB_NAME,
+        user=DB_USER,
+        password=DB_PASSWORD,
+        host=DB_HOST,
+        port=DB_PORT
+    )
+    cur = conn.cursor()
 
-        with open("books.csv", "r") as file:
-            reader = csv.reader(file)
-            next(reader)  # Skip the header row
+    with open("books.csv", "r", encoding="utf-8") as file:
+        reader = csv.reader(file)
+        next(reader)  # Skip the header row
 
-            for isbn, title, author, year in reader:
+        for row in reader:
+            if len(row) != 4:
+                print(f"Skipping invalid row: {row}")  # Debugging invalid rows
+                continue
+
+            isbn, title, author, year = [col.strip() for col in row]  # Trim spaces
+            try:
                 cur.execute(
                     "INSERT INTO books (isbn, title, author, year) VALUES (%s, %s, %s, %s) ON CONFLICT (isbn) DO NOTHING",
-                    (isbn, title, author, year)
+                    (isbn, title, author, int(year))  # Convert year to integer
                 )
+            except Exception as e:
+                print(f"Error inserting row {row}: {e}")
 
-        conn.commit()
-        cur.close()
-        conn.close()
-        print("Books imported successfully!")
-
-    except Exception as e:
-        print("Error:", e)
+    conn.commit()
+    cur.close()
+    conn.close()
+    print("Books imported successfully!")
 
 if __name__ == "__main__":
     import_books()
