@@ -60,16 +60,21 @@ def login():
         username = request.form["username"]
         password = request.form["password"]
 
+        # Fetch user from the database
         user = db.execute(text("SELECT * FROM users WHERE username = :username"), {"username": username}).fetchone()
 
-        if user and user["password"] == password:
-            session["user_id"] = user["id"]
-            session["username"] = user["username"]
-            flash("Login successful!", "success")
-            return redirect("/")
+        if user:
+            # Access the values by index (tuple indexing)
+            if user[2] == password:  # user[2] is the password in the tuple
+                session["user_id"] = user[0]  # user[0] is the id
+                session["username"] = user[1]  # user[1] is the username
+                flash("Login successful!", "success")
+                return redirect("/")
+            else:
+                flash("Invalid password", "danger")
         else:
-            flash("Invalid username or password", "danger")
-            return redirect("/login")
+            flash("Invalid username", "danger")
+        return redirect("/login")
 
     return render_template("login.html")
 
