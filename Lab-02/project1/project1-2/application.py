@@ -115,6 +115,22 @@ def search():
 
     return render_template("search.html", books=books)
 
+@app.route("/book/<isbn>")
+def book_details(isbn):
+    """Display details of a selected book."""
+    if "user_id" not in session:
+        flash("You must be logged in to view book details.", "danger")
+        return redirect("/login")
+
+    book = db.execute(text("SELECT * FROM books WHERE isbn = :isbn"), {"isbn": isbn}).fetchone()
+
+    if not book:
+        flash("Book not found.", "warning")
+        return redirect("/search")
+
+    return render_template("book.html", book=book)
+
+
 
 if __name__ == "__main__":
     create_tables()  
