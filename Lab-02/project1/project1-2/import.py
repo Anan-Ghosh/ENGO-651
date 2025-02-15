@@ -1,6 +1,6 @@
 import os
 import csv
-from sqlalchemy import create_engine, text  # Import text()
+from sqlalchemy import create_engine, text  
 from sqlalchemy.orm import scoped_session, sessionmaker
 
 # Ensure DATABASE_URL is set
@@ -12,7 +12,6 @@ engine = create_engine(os.getenv("DATABASE_URL"))
 db = scoped_session(sessionmaker(bind=engine))
 
 def create_books_table():
-    """Ensures the books table exists before inserting data."""
     db.execute(text("""
         CREATE TABLE IF NOT EXISTS books (
             id SERIAL PRIMARY KEY,
@@ -27,7 +26,7 @@ def create_books_table():
 
 def import_books():
     """Reads books.csv and inserts data into the books table, avoiding duplicates."""
-    create_books_table()  # Ensure table exists before inserting data
+    create_books_table()  
 
     with open("books.csv", "r", encoding="utf-8") as file:
         reader = csv.reader(file)
