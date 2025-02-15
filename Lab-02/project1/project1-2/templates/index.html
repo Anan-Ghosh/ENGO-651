@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Home</title>
+</head>
+<body>
+    <h2>Welcome to the Book Review Website</h2>
+    {% if session["username"] %}
+        <p>Hello, {{ session["username"] }}! <a href="/logout">Logout</a></p>
+    {% else %}
+        <p><a href="/login">Login</a> or <a href="/register">Register</a></p>
+    {% endif %}
+</body>
+</html>
