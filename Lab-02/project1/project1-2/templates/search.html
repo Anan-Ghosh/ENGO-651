@@ -16,7 +16,10 @@
             <ul>
                 {% for book in books %}
                     <li>
-                        <strong>{{ book.title }}</strong> by {{ book.author }} ({{ book.year }})  
+                        <a href="{{ url_for('book_details', isbn=book.isbn) }}">
+                            <strong>{{ book.title }}</strong>
+                        </a> 
+                        by {{ book.author }} ({{ book.year }})  
                         [ISBN: {{ book.isbn }}]
                     </li>
                 {% endfor %}
