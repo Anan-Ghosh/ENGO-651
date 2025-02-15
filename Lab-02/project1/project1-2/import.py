@@ -1,78 +1,60 @@
+import os
 import csv
-import psycopg2
+from sqlalchemy import create_engine, text  # Import text()
+from sqlalchemy.orm import scoped_session, sessionmaker
 
-# Database connection settings
-DB_NAME = "Book"
-DB_USER = "postgres"
-DB_PASSWORD = "vagabond241998"
-DB_HOST = "localhost"
-DB_PORT = "5432"
+# Ensure DATABASE_URL is set
+if not os.getenv("DATABASE_URL"):
+    raise RuntimeError("DATABASE_URL is not set")
 
-def create_table():
-    conn = psycopg2.connect(               ##Creates the books table if it does not exist.
-        dbname=DB_NAME,
-        user=DB_USER,
-        password=DB_PASSWORD,
-        host=DB_HOST,
-        port=DB_PORT
-    )
-    cur = conn.cursor()
-    
-    cur.execute("""
+# Set up database connection
+engine = create_engine(os.getenv("DATABASE_URL"))
+db = scoped_session(sessionmaker(bind=engine))
+
+def create_books_table():
+    """Ensures the books table exists before inserting data."""
+    db.execute(text("""
         CREATE TABLE IF NOT EXISTS books (
             id SERIAL PRIMARY KEY,
             isbn VARCHAR(20) UNIQUE NOT NULL,
             title TEXT NOT NULL,
             author TEXT NOT NULL,
             year INTEGER NOT NULL
-        );
-    """)
-    
-    conn.commit()
-    cur.close()
-    conn.close()
-    print("Table created successfully!")
-
+        )
+    """))
+    db.commit()
+    print("Books table created (if it didn't exist).")
 
 def import_books():
-    """Reads books.csv and inserts the data into the database."""
-    create_table()  # Ensure the table exists before inserting
+    """Reads books.csv and inserts data into the books table, avoiding duplicates."""
+    create_books_table()  # Ensure table exists before inserting data
 
-    conn = psycopg2.connect(
-        dbname=DB_NAME,
-        user=DB_USER,
-        password=DB_PASSWORD,
-        host=DB_HOST,
-        port=DB_PORT
-    )
-    conn.autocommit = True  
-    cur = conn.cursor()
+    with open("books.csv", "r", encoding="utf-8") as file:
+        reader = csv.reader(file)
+        next(reader)  # Skip the header row
 
-    try:
-        with open("books.csv", "r", encoding="utf-8") as file:
-            reader = csv.reader(file)
-            next(reader)  # Skip the header row
+        for row in reader:
+            if len(row) != 4:
+                print(f"Skipping invalid row: {row}")  # Debugging invalid rows
+                continue  
 
-            for row in reader:
-                if len(row) != 4:
-                    print(f"Skipping invalid row: {row}")  
-                    continue  
+            isbn, title, author, year = [col.strip() for col in row]  # Trim spaces
 
-                isbn, title, author, year = [col.strip() for col in row]  # Trim spaces
+            # Check if the book is already in the database
+            existing_book = db.execute(text("SELECT * FROM books WHERE isbn = :isbn"), {"isbn": isbn}).fetchone()
+            if existing_book:
+                print(f"Skipping duplicate book: {isbn} - {title}")
+                continue  # Skip inserting duplicates
 
-                try:
-                    cur.execute(
-                        "INSERT INTO books (isbn, title, author, year) VALUES (%s, %s, %s, %s) ON CONFLICT (isbn) DO NOTHING",
-                        (isbn, title, author, int(year))
-                    )
-                except Exception as e:
-                    print(f"Error inserting row {row}: {e}")  # Log error but continue
+            try:
+                db.execute(text(
+                    "INSERT INTO books (isbn, title, author, year) VALUES (:isbn, :title, :author, :year)"),
+                    {"isbn": isbn, "title": title, "author": author, "year": int(year)}
+                )
+            except Exception as e:
+                print(f"Error inserting row {row}: {e}")  
 
-    except Exception as e:
-        print(f"Error reading CSV file: {e}")  
-
-    cur.close()
-    conn.close()
+    db.commit()
     print("Books imported successfully!")
 
 if __name__ == "__main__":
