@@ -84,6 +84,38 @@ def logout():
     flash("Logged out successfully!", "success")
     return redirect("/")
 
+
+
+@app.route("/search", methods=["GET", "POST"])
+def search():
+    """Allows logged-in users to search for books by ISBN, title, or author."""
+    if "user_id" not in session:
+        flash("You must be logged in to search for books.", "danger")
+        return redirect("/login")
+
+    books = None
+    if request.method == "POST":
+        query = request.form.get("query")
+
+        if not query:
+            flash("Please enter a search term.", "warning")
+            return render_template("search.html", books=None)
+
+        # Perform case-insensitive search using LIKE for partial matches
+        books = db.execute(text("""
+            SELECT * FROM books
+            WHERE 
+                LOWER(isbn) LIKE LOWER(:query) OR
+                LOWER(title) LIKE LOWER(:query) OR
+                LOWER(author) LIKE LOWER(:query)
+        """), {"query": f"%{query}%"}).fetchall()
+
+        if not books:
+            flash("No books found. Try a different search term.", "warning")
+
+    return render_template("search.html", books=books)
+
+
 if __name__ == "__main__":
     create_tables()  
     app.run(debug=True)
