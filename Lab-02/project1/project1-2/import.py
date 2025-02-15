@@ -35,7 +35,8 @@ def create_table():
 
 
 def import_books():
-    create_table()  # Ensure the table exists before inserting data
+    """Reads books.csv and inserts the data into the database."""
+    create_table()  # Ensure the table exists before inserting
 
     conn = psycopg2.connect(
         dbname=DB_NAME,
@@ -44,27 +45,32 @@ def import_books():
         host=DB_HOST,
         port=DB_PORT
     )
+    conn.autocommit = True  
     cur = conn.cursor()
 
-    with open("books.csv", "r", encoding="utf-8") as file:
-        reader = csv.reader(file)
-        next(reader)  # Skip the header row
+    try:
+        with open("books.csv", "r", encoding="utf-8") as file:
+            reader = csv.reader(file)
+            next(reader)  # Skip the header row
 
-        for row in reader:
-            if len(row) != 4:
-                print(f"Skipping invalid row: {row}")  # Debugging invalid rows
-                continue
+            for row in reader:
+                if len(row) != 4:
+                    print(f"Skipping invalid row: {row}")  
+                    continue  
 
-            isbn, title, author, year = [col.strip() for col in row]  # Trim spaces
-            try:
-                cur.execute(
-                    "INSERT INTO books (isbn, title, author, year) VALUES (%s, %s, %s, %s) ON CONFLICT (isbn) DO NOTHING",
-                    (isbn, title, author, int(year))  # Convert year to integer
-                )
-            except Exception as e:
-                print(f"Error inserting row {row}: {e}")
+                isbn, title, author, year = [col.strip() for col in row]  # Trim spaces
 
-    conn.commit()
+                try:
+                    cur.execute(
+                        "INSERT INTO books (isbn, title, author, year) VALUES (%s, %s, %s, %s) ON CONFLICT (isbn) DO NOTHING",
+                        (isbn, title, author, int(year))
+                    )
+                except Exception as e:
+                    print(f"Error inserting row {row}: {e}")  # Log error but continue
+
+    except Exception as e:
+        print(f"Error reading CSV file: {e}")  
+
     cur.close()
     conn.close()
     print("Books imported successfully!")
