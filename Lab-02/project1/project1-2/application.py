@@ -64,19 +64,21 @@ def login():
         user = db.execute(text("SELECT * FROM users WHERE username = :username"), {"username": username}).fetchone()
 
         if user:
-            # Access the values by index (tuple indexing)
-            if user[2] == password:  # user[2] is the password in the tuple
-                session["user_id"] = user[0]  # user[0] is the id
-                session["username"] = user[1]  # user[1] is the username
-                flash("Login successful!", "success")
-                return redirect("/")
+            # user[2] is the stored password (hashed or plaintext)
+            if user[2] == password:  # Ensure this matches how passwords are stored
+                session["user_id"] = user[0]  # Store user ID in session
+                session["username"] = user[1]  # Store username in session
+                flash(f"Welcome, {session['username']}!", "success")
+                return redirect("/search")  # Redirect to search page after login
             else:
                 flash("Invalid password", "danger")
         else:
             flash("Invalid username", "danger")
+
         return redirect("/login")
 
     return render_template("login.html")
+
 
 @app.route("/logout")
 def logout():
