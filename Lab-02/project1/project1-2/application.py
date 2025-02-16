@@ -90,20 +90,19 @@ def logout():
 
 @app.route("/search", methods=["GET", "POST"])
 def search():
-    """Allows logged-in users to search for books by ISBN, title, or author."""
+    """Allows logged-in users to search for books."""
     if "user_id" not in session:
-        flash("You must be logged in to search for books.", "danger")
-        return redirect("/login")
+        flash("You must be logged in to access this page.", "danger")
+        return redirect("/login")  # Redirect to login if not logged in
 
     books = None
     if request.method == "POST":
         query = request.form.get("query")
-
         if not query:
             flash("Please enter a search term.", "warning")
             return render_template("search.html", books=None)
 
-        # Perform case-insensitive search using LIKE for partial matches
+        # Perform case-insensitive search
         books = db.execute(text("""
             SELECT * FROM books
             WHERE 
@@ -116,6 +115,7 @@ def search():
             flash("No books found. Try a different search term.", "warning")
 
     return render_template("search.html", books=books)
+
 
 @app.route("/book/<isbn>")
 def book_details(isbn):
@@ -130,7 +130,13 @@ def book_details(isbn):
         flash("Book not found.", "warning")
         return redirect("/search")
 
-    return render_template("book.html", book=book)
+    return render_template("book.html", book={
+        "id": book[0],
+        "isbn": book[1],
+        "title": book[2],
+        "author": book[3],
+        "year": book[4]
+    })
 
 
 
