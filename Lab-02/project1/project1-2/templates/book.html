@@ -12,6 +12,22 @@
     <p><strong>Publication Year:</strong> {{ book.year }}</p>
     <p><strong>ISBN:</strong> {{ book.isbn }}</p>
 
+    {% if google_publishedDate %}
+      <p><strong>Published Date:</strong> {{ google_publishedDate }}</p>
+    {% endif %}
+
+    {% if google_avg_rating or google_ratings_count %}
+      <p><strong>Google Books Rating:</strong> 
+         {% if google_avg_rating %}{{ google_avg_rating }} out of 5{% endif %}
+         {% if google_ratings_count %} ({{ google_ratings_count }} ratings){% endif %}
+      </p>
+    {% endif %}
+
+    {% if summarized_description %}
+      <h3>Summary</h3>
+      <p>{{ summarized_description }}</p>
+    {% endif %}
+
     <h3 class="mt-4">Leave a Review</h3>
     <form action="/book/{{ book.isbn }}" method="POST" class="mb-4">
         <div class="mb-3">
