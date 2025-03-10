@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calgary Building Permits Map</title>
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+    <!-- Leaflet Marker Cluster CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.Default.css">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
+
+    <!-- Date Range Picker -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-calgary">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <img src="City-Of-Calgary-Logo-Vector.svg-.png" alt="Calgary Logo" class="calgary-logo">
+                <span>Calgary Building Permits Map</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Main Container: Flexbox for Side-by-Side Layout -->
+    <div class="main-container">
+        
+        <!-- Search Controls (Left Side) -->
+        <div class="controls">
+            <h5>Select Date Range</h5>
+            
+            <!-- From Date Input -->
+            <label for="fromDate" class="date-label">From:</label>
+            <input type="text" id="fromDate" class="form-control date-input" readonly />
+
+            <!-- To Date Input -->
+            <label for="toDate" class="date-label">To:</label>
+            <input type="text" id="toDate" class="form-control date-input" readonly />
+
+            <!-- Search Button -->
+            <button id="searchBtn" class="btn btn-primary mt-3">Search</button>
+        </div>
+
+        <!-- Map Display (Right Side) -->
+        <div class="map-container">
+            <div id="map"></div>
+        </div>
+
+    </div>
+
+    <!-- JS Libraries -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
+
+    <!-- Custom Script -->
+    <script src="script.js"></script>
+
+</body>
+</html>
