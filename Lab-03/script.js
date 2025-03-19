@@ -1,102 +1,90 @@
 $(document).ready(function () {
     let today = moment().format('YYYY-MM-DD');
     let lastMonth = moment().subtract(30, 'days').format('YYYY-MM-DD');
-
     $('#fromDate').val(lastMonth);
     $('#toDate').val(today);
 
-    // Initialize "From" Date Picker
-    $('#fromDate').daterangepicker({
+    $('#fromDate, #toDate').daterangepicker({
         singleDatePicker: true,
         autoUpdateInput: true,
         locale: { format: 'YYYY-MM-DD' }
-    }, function(start) {
-        $('#fromDate').val(start.format('YYYY-MM-DD'));
-
-        // Ensure "To" date is not earlier than "From" date
-        if (moment($('#toDate').val()).isBefore(start)) {
-            $('#toDate').val(start.format('YYYY-MM-DD'));
-        }
     });
 
-    // Initialize "To" Date Picker
-    $('#toDate').daterangepicker({
-        singleDatePicker: true,
-        autoUpdateInput: true,
-        locale: { format: 'YYYY-MM-DD' }
-    }, function(start) {
-        $('#toDate').val(start.format('YYYY-MM-DD'));
-
-        // Ensure "From" date is not later than "To" date
-        if (moment($('#fromDate').val()).isAfter(start)) {
-            $('#fromDate').val(start.format('YYYY-MM-DD'));
-        }
-    });
-
-    // 🗺 Initialize the Leaflet map inside the ready function
     let map = L.map('map').setView([51.0447, -114.0719], 12);
-
-    // Add OpenStreetMap tile layer
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
 
-    // Marker Cluster Group
     let markersCluster = L.markerClusterGroup();
     map.addLayer(markersCluster);
 
-    // Function to fetch permit data
+    let mapboxLayer = L.tileLayer('https://api.mapbox.com/styles/v1/ananghosh/cm8g7h5jh011o01r033nz4p7h/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYW5hbmdob3NoIiwiYSI6ImNtOGczMTN4ODBoeHAyc290cnZrOGR5a2gifQ.Co_L4QQ2-re2dIcRBQPgsA', {
+        tileSize: 512,
+        zoomOffset: -1
+    });
+    let isMapboxLayerAdded = false;
+
+    $('#toggleMapbox').click(function () {
+        if (isMapboxLayerAdded) {
+            map.removeLayer(mapboxLayer);
+        } else {
+            map.addLayer(mapboxLayer);
+        }
+        isMapboxLayerAdded = !isMapboxLayerAdded;
+    });
+
     async function fetchPermitData(startDate, endDate) {
         const apiUrl = `https://data.calgary.ca/resource/c2es-76ed.geojson?$where=issueddate between '${startDate}T00:00:00.000' and '${endDate}T23:59:59.999'`;
-
         try {
             let response = await fetch(apiUrl);
             if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
-            let data = await response.json();
-            return data;
+            return await response.json();
         } catch (error) {
-            alert("Failed to fetch data. Please check your internet connection or try again later.");
+            alert("Failed to fetch data. Please try again later.");
             console.error("Error fetching data:", error);
         }
     }
 
-    // Function to plot markers
     function plotMarkers(geojsonData) {
-        markersCluster.clearLayers(); // Clear existing markers
-
+        markersCluster.clearLayers();
         let geoLayer = L.geoJSON(geojsonData, {
+            pointToLayer: function (feature, latlng) {
+                let description = feature.properties.DESCRIPTION || "Unknown";
+                return L.circleMarker(latlng, {
+                    radius: 8,
+                    fillColor: "#ff0000",
+                    color: "#000",
+                    weight: 1,
+                    opacity: 1,
+                    fillOpacity: 0.8
+                });
+            },
             onEachFeature: function (feature, layer) {
                 let props = feature.properties;
                 let popupContent = `
-                    <strong>Issued Date:</strong> ${props.issueddate}<br>
+                    <strong>Issued Date:</strong> ${props.issueddate || 'N/A'}<br>
                     <strong>Work Class:</strong> ${props.workclassgroup || 'N/A'}<br>
-                    <strong>Contractor:</strong> ${props.contractorname || 'N/A'}<br>
                     <strong>Community:</strong> ${props.communityname || 'N/A'}<br>
                     <strong>Address:</strong> ${props.originaladdress || 'N/A'}
                 `;
                 layer.bindPopup(popupContent);
             }
         });
-
         markersCluster.addLayer(geoLayer);
     }
 
-    // Search Button Event
-    document.getElementById('searchBtn').addEventListener('click', async function () {
-        let startDate = document.getElementById('fromDate').value;
-        let endDate = document.getElementById('toDate').value;
-
-        if (startDate && endDate && moment(startDate).isBefore(endDate)) {
-            console.log(`Fetching data from ${startDate} to ${endDate}...`);
-            let data = await fetchPermitData(startDate, endDate);
-            if (data && data.features.length > 0) {
-                plotMarkers(data);
-            } else {
-                alert("No building permits found for the selected date range.");
-            }
+    $('#searchBtn').click(async function () {
+        let startDate = $('#fromDate').val();
+        let endDate = $('#toDate').val();
+        if (!moment(startDate).isBefore(endDate)) {
+            alert("Please ensure the 'From' date is earlier than the 'To' date.");
+            return;
+        }
+        let data = await fetchPermitData(startDate, endDate);
+        if (data && data.features.length > 0) {
+            plotMarkers(data);
         } else {
-            alert("Please ensure the 'From' date is not later than the 'To' date.");
+            alert("No building permits found for the selected date range.");
         }
     });
-
 });
