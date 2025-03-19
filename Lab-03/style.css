@@ -6,113 +6,70 @@ body {
     padding: 0;
 }
 
-/* Calgary Colors */
-.bg-calgary {
-    background-color: #C8102E !important; /* Official Calgary red */
-}
-
-/* Navigation Bar */
-.navbar {
-    padding: 12px 0;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    width: 100%;
-}
-
-/* Calgary Logo Styling */
-.calgary-logo {
-    height: 40px;
-    margin-right: 10px;
-}
-
-/* Main Container: Flexbox for Side-by-Side Layout */
-.main-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    width: 90%;
+/* Responsive Container */
+.container {
     max-width: 1200px;
-    margin: 20px auto;
+    margin: auto;
 }
 
-/* Controls Panel */
-.controls {
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    border-left: 5px solid #C8102E;
-    width: 30%;
-    text-align: center;
-    transition: transform 0.2s;
-}
-
-.controls:hover {
-    transform: scale(1.02);
-}
-
-/* Date Labels */
-.date-label {
-    font-weight: bold;
-    margin-top: 10px;
-    display: block;
-    text-align: left;
-}
-
-/* Date Inputs */
-.date-input {
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 10px;
-    width: 100%;
-    font-size: 14px;
-    background-color: #f8f9fa;
-    cursor: pointer;
-}
-
-/* Search Button */
-#searchBtn {
-    width: 100%;
-    background-color: #C8102E;
-    color: white;
-    border: none;
-    padding: 12px;
-    font-size: 16px;
-    cursor: pointer;
-    border-radius: 5px;
-    margin-top: 10px;
-    transition: background 0.3s ease-in-out, transform 0.1s;
-}
-
-#searchBtn:hover {
-    background-color: #A10E24;
-    transform: scale(1.05);
-}
-
-/* Map Container */
-.map-container {
-    width: 68%;
-}
-
+/* Map Styling */
 #map {
-    height: 600px;
+    height: 80vh;
     width: 100%;
     border-radius: 10px;
     border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-/* Responsive Design */
-@media (max-width: 900px) {
-    .main-container {
-        flex-direction: column;
-        align-items: center;
-    }
+/* Controls Panel */
+.controls {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 15px;
+}
 
+/* Buttons */
+button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 10px;
+    transition: all 0.3s ease-in-out;
+    font-weight: bold;
+}
+
+/* Search Button - Red Theme */
+#searchBtn {
+    background: linear-gradient(135deg, #d32f2f, #b71c1c);
+    color: white;
+}
+
+#searchBtn:hover {
+    background: linear-gradient(135deg, #e53935, #c62828);
+    transform: scale(1.05);
+}
+
+/* Toggle Button - Dark Theme */
+#toggleMapbox {
+    background: linear-gradient(135deg, #616161, #424242);
+    color: white;
+}
+
+#toggleMapbox:hover {
+    background: linear-gradient(135deg, #757575, #616161);
+    transform: scale(1.05);
+}
+
+/* Responsive Fixes */
+@media (max-width: 768px) {
     .controls {
-        width: 100%;
-        margin-bottom: 20px;
+        text-align: center;
     }
-
-    .map-container {
+    input, button {
         width: 100%;
     }
 }
