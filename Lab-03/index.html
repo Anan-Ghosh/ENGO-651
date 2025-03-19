@@ -3,12 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calgary Building Permits Map</title>
+    <title>Calgary Traffic Incidents & Building Permits Map</title>
 
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-
-    <!-- Leaflet Marker Cluster CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.Default.css">
 
@@ -18,58 +16,42 @@
     <!-- Date Range Picker -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
-    <!-- Custom Styles -->
+    <!-- Mapbox GL CSS -->
+    <link href="https://api.mapbox.com/mapbox-gl-js/v3.0.0/mapbox-gl.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-    <!-- Navigation Bar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-calgary">
-        <div class="container">
+    <!-- 🏙️ Navbar with Calgary Logo -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-danger py-3">
+        <div class="container d-flex justify-content-between align-items-center">
             <a class="navbar-brand d-flex align-items-center" href="#">
-                <img src="City-Of-Calgary-Logo-Vector.svg-.png" alt="Calgary Logo" class="calgary-logo">
-                <span>Calgary Building Permits Map</span>
+                <img src="City-Of-Calgary-Logo-Vector.svg-.png" 
+                     alt="Calgary Logo" width="150" height="50" class="me-2">
+                <span class="fw-bold fs-4 text-white">Calgary Traffic & Permits Map</span>
             </a>
         </div>
     </nav>
 
-    <!-- Main Container: Flexbox for Side-by-Side Layout -->
-    <div class="main-container">
-        
-        <!-- Search Controls (Left Side) -->
-        <div class="controls">
-            <h5>Select Date Range</h5>
-            
-            <!-- From Date Input -->
-            <label for="fromDate" class="date-label">From:</label>
-            <input type="text" id="fromDate" class="form-control date-input" readonly />
-
-            <!-- To Date Input -->
-            <label for="toDate" class="date-label">To:</label>
-            <input type="text" id="toDate" class="form-control date-input" readonly />
-
-            <!-- Search Button -->
-            <button id="searchBtn" class="btn btn-primary mt-3">Search</button>
+    <div class="container mt-4">
+        <div class="controls bg-white p-4 rounded shadow-sm">
+            <h4 class="text-center fw-bold text-danger mb-3">Select Date Range</h4>
+            <label for="fromDate" class="fw-bold">From:</label>
+            <input type="text" id="fromDate" class="form-control" readonly>
+            <label for="toDate" class="fw-bold mt-2">To:</label>
+            <input type="text" id="toDate" class="form-control" readonly>
+            <button id="searchBtn" class="btn mt-3 w-100">🔍 Search</button>
+            <button id="toggleMapbox" class="btn mt-2 w-100">🗺️ Toggle Mapbox Layer</button>
         </div>
-
-        <!-- Map Display (Right Side) -->
-        <div class="map-container">
-            <div id="map"></div>
-        </div>
-
+        <div id="map" class="mt-4 border rounded shadow"></div>
     </div>
 
     <!-- JS Libraries -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/moment/moment.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-
-    <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://unpkg.com/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
-
-    <!-- Custom Script -->
+    <script src="https://api.mapbox.com/mapbox-gl-js/v3.0.0/mapbox-gl.js"></script>
     <script src="script.js"></script>
-
 </body>
 </html>
