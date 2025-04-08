@@ -7,49 +7,7 @@
 
   <!-- Leaflet CSS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
-
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 15px;
-      max-width: 600px;
-      margin: auto;
-    }
-
-    h2 {
-      text-align: center;
-    }
-
-    input, textarea, button {
-      width: 100%;
-      padding: 10px;
-      margin-top: 10px;
-      font-size: 1em;
-    }
-
-    button {
-      background-color: #2d89ef;
-      color: white;
-      border: none;
-      cursor: pointer;
-    }
-
-    button:disabled {
-      background-color: #999;
-      cursor: not-allowed;
-    }
-
-    #status {
-      margin-top: 10px;
-      font-weight: bold;
-    }
-
-    #map {
-      height: 400px;
-      margin-top: 20px;
-      border: 1px solid #ccc;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <h2>IoT Smartphone Sensor App</h2>
@@ -59,7 +17,7 @@
   <input id="host" type="text" value="test.mosquitto.org" />
 
   <label for="port">MQTT Broker Port</label>
-  <input id="port" type="number" value="8080" />
+  <input id="port" type="number" value="8081" />
 
   <button id="startBtn">Start Connection</button>
   <button id="endBtn" disabled>End Connection</button>
@@ -68,8 +26,9 @@
   <hr />
 
   <!-- Publish Section -->
-  <label for="topic">Topic to Publish</label>
-  <input id="topic" type="text" placeholder="e.g., engo651/Anan_Ghosh/my_temperature" />
+  <label for="topicSuffix">Engo651/Anan_Ghosh/</label>
+<input id="topicSuffix" type="text" placeholder="e.g., my_temperature" />
+
 
   <label for="message">Message</label>
   <textarea id="message" rows="3" placeholder="Type your message here..."></textarea>
