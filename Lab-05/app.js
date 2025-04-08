@@ -1,3 +1,5 @@
+// Extended app.js: now displays alerts for plain messages and confirms GeoJSON share on the map
+
 let client = null;
 let isConnected = false;
 
@@ -20,6 +22,7 @@ const endBtn = document.getElementById("endBtn");
 const statusText = document.getElementById("status");
 const hostInput = document.getElementById("host");
 const portInput = document.getElementById("port");
+const topicInput = document.getElementById("topicSuffix");
 
 function startConnection() {
   if (isConnected) return;
@@ -32,7 +35,10 @@ function startConnection() {
   }
 
   const clientId = "clientId-" + Math.random().toString(16).substr(2, 8);
-  client = new Paho.MQTT.Client(host, port, clientId);
+  const fullURL = `wss://${host}:${port}/mqtt`;
+  console.log("Connecting to:", fullURL);
+
+  client = new Paho.MQTT.Client(fullURL, clientId);
 
   client.onConnectionLost = onConnectionLost;
   client.onMessageArrived = onMessageArrived;
@@ -41,10 +47,11 @@ function startConnection() {
     onSuccess: onConnect,
     onFailure: err => {
       console.error("Connection failed:", err.errorMessage);
+      alert("Connection failed: " + err.errorMessage);
       statusText.textContent = "Connection failed.";
       statusText.className = "red";
     },
-    useSSL: false
+    useSSL: true
   });
 
   statusText.textContent = "Connecting...";
@@ -55,12 +62,18 @@ function onConnect() {
   isConnected = true;
   statusText.textContent = "Connected to broker";
   statusText.className = "green";
-  client.subscribe("engo651/Anan_Ghosh/my_temperature");
 
   hostInput.disabled = true;
   portInput.disabled = true;
   startBtn.disabled = true;
   endBtn.disabled = false;
+
+  const topicSuffix = topicInput.value.trim();
+  if (topicSuffix) {
+    const topic = "engo651/Anan_Ghosh/" + topicSuffix;
+    client.subscribe(topic);
+    console.log("Subscribed to:", topic);
+  }
 }
 
 function onConnectionLost(response) {
@@ -73,44 +86,64 @@ function onConnectionLost(response) {
 }
 
 function onMessageArrived(message) {
+  console.log("Message arrived:", message.payloadString);
+
+  let payload;
   try {
-    const payload = JSON.parse(message.payloadString);
-    const coords = payload.geometry.coordinates;
-    const temperature = payload.properties.temperature;
-
-    let color = "blue";
-    if (temperature >= 10 && temperature < 30) color = "green";
-    else if (temperature >= 30) color = "red";
-
-    const customIcon = L.icon({
-      iconUrl: getColoredMarkerIcon(color),
-      iconSize: [25, 41],
-      iconAnchor: [12, 41],
-      popupAnchor: [1, -34]
-    });
-
-    if (marker) {
-      marker.setLatLng([coords[1], coords[0]]);
-      marker.setPopupContent(`🌡 Temperature: ${temperature} °C`);
-      marker.setIcon(customIcon);
-    } else {
-      marker = L.marker([coords[1], coords[0]], { icon: customIcon })
-        .addTo(map)
-        .bindPopup(`🌡 Temperature: ${temperature} °C`);
-    }
-
-    map.setView([coords[1], coords[0]], 14);
-    marker.openPopup();
-
-    // Add bounce animation
-    if (marker._icon) {
-      marker._icon.classList.add("leaflet-marker-bounce");
-      setTimeout(() => marker._icon.classList.remove("leaflet-marker-bounce"), 600);
-    }
+    payload = JSON.parse(message.payloadString);
   } catch (e) {
-    console.error("Error processing message:", e);
+    alert("Non-JSON message received: " + message.payloadString);
+    return;
+  }
+
+  // 🔍 Check if it's GeoJSON
+  const isGeoJSON =
+    payload.type === "Feature" &&
+    payload.geometry &&
+    Array.isArray(payload.geometry.coordinates) &&
+    payload.properties &&
+    typeof payload.properties.temperature === "number";
+
+  if (!isGeoJSON) {
+    // ✅ It's valid JSON but not GeoJSON — show it as info
+    alert("📦 Received JSON message:\n" + JSON.stringify(payload, null, 2));
+    return;
+  }
+
+  // 🗺 Handle GeoJSON: update the map
+  const coords = payload.geometry.coordinates;
+  const temperature = payload.properties.temperature;
+
+  let color = "blue";
+  if (temperature >= 10 && temperature < 30) color = "green";
+  else if (temperature >= 30) color = "red";
+
+  const customIcon = L.icon({
+    iconUrl: getColoredMarkerIcon(color),
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34]
+  });
+
+  if (marker) {
+    marker.setLatLng([coords[1], coords[0]]);
+    marker.setPopupContent(`🌡 Temperature: ${temperature} °C`);
+    marker.setIcon(customIcon);
+  } else {
+    marker = L.marker([coords[1], coords[0]], { icon: customIcon })
+      .addTo(map)
+      .bindPopup(`🌡 Temperature: ${temperature} °C`);
+  }
+
+  map.setView([coords[1], coords[0]], 14);
+  marker.openPopup();
+
+  if (marker._icon) {
+    marker._icon.classList.add("leaflet-marker-bounce");
+    setTimeout(() => marker._icon.classList.remove("leaflet-marker-bounce"), 600);
   }
 }
+
 
 function getColoredMarkerIcon(color) {
   const colors = {
@@ -136,13 +169,20 @@ function endConnection() {
 
 function publishMessage() {
   if (!isConnected) return alert("Connect to the broker first.");
-  const topic = document.getElementById("topic").value;
-  const msg = document.getElementById("message").value;
-  if (!topic || !msg) return alert("Topic and message are required.");
-  const message = new Paho.MQTT.Message(msg);
+  const topicSuffix = topicInput.value.trim();
+  const msg = {
+    message: document.getElementById("message").value.trim()
+  };
+
+  if (!topicSuffix || !msg) return alert("Topic and message are required.");
+
+  const topic = "engo651/Anan_Ghosh/" + topicSuffix;
+  console.log("Publishing to:", topic, "Message:", msg);
+
+  const message = new Paho.MQTT.Message(JSON.stringify(msg));
   message.destinationName = topic;
   client.send(message);
-  alert("Message published!");
+  alert("Message published to topic: " + topic);
 }
 
 function shareStatus() {
@@ -174,11 +214,18 @@ function sendStatusAsGeoJSON(position) {
     }
   };
 
-  const topic = "engo651/Anan_Ghosh/my_temperature";
+  const topicSuffix = topicInput.value.trim();
+  if (!topicSuffix) return alert("Please enter a topic suffix.");
+
+  const topic = "engo651/Anan_Ghosh/" + topicSuffix;
+  console.log("Sharing status to:", topic, geojson);
+
   const message = new Paho.MQTT.Message(JSON.stringify(geojson));
   message.destinationName = topic;
   client.send(message);
-  alert("Status shared with temperature: " + temperature + " °C");
+
+  alert("Status shared!\nLocation: " + latitude.toFixed(4) + ", " + longitude.toFixed(4) +
+        "\nTemperature: " + temperature + " °C\n\nTopic: " + topic);
 }
 
 startBtn.addEventListener("click", startConnection);
